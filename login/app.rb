@@ -4,7 +4,7 @@ require 'sinatra/reloader' if development?
 
 require './models.rb'
 
-# set :bind, '192.168.33.10'
+set :bind, '192.168.33.10'
 set :port, 3000
 
 use Rack::Session::Cookie
@@ -35,11 +35,8 @@ end
 
 post '/session/create' do
   user = User.find_by_name params[:name]
-  p user
   if user && user.authenticate(params[:password])
-    p "auth!"
     session[:user_id] = user.id
-    redirect '/'
   end
   redirect "/"
 end
